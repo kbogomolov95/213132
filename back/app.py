@@ -194,10 +194,12 @@ def images(path):
     return path
 
 
-flask_app.run(host='localhost', port=8080)
+# flask_app.run(host='localhost', port=8000)
+#
+white = ['http://localhost:3000', 'http://localhost:9000', 'http://localhost:5000','http://localhost:8000']
 
-white = ['http://localhost:3000', 'http://localhost:9000', 'http://localhost:5000']
 
+print(cv2.__version__)
 
 @flask_app.after_request
 def add_cors_headers(response):

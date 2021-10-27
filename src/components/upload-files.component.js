@@ -1,11 +1,87 @@
-import React, {Component} from "react";
+import React, {Component, useEffect, useState} from "react";
 import Dropzone from "react-dropzone";
 // import
 import UploadService from "../services/upload-files.service";
 // import Card from '../components/card'
 
+// import Ap from App
 
 import detectionResults from "../components/detection-result.component"
+
+
+// import App from "../App";
+
+// function SetupLoading () {
+//     useEffect(() => {
+//         App.setLoading(true);
+//         // setTimeout(()=> {
+//         //     setLoading(false);
+//         // }, 1000)
+//
+//     }, [])
+// }
+
+    // function Card(value, index) {
+    //     // console.log(index.data);
+    //     // alert(index);
+    //     // await new Promise(r => setTimeout(r, 50000));
+    //     let y_pos = 150 + 500 * index + 'px';
+    //     let margin_l = (window.screen.width - 1049) / 2
+    //     // alert(value['src_file'])
+    //     // console.log((window.screen.width))
+    //     return (<div className="card" key={index} style={{
+    //         minHeight: "150px", width: "80%", left: "10%",
+    //         borderRadius: "15px", backgroundColor: "#EEEEEE"
+    //     }}>
+    //         <div className="title" align="center" style={{fontWeight: "600", marginTop: "1%", fontSize: "20px"}}>
+    //             Название файла: {value['fileName']}</div>
+    //         {/*<div className="img_container" style={{float: "left", marginLeft: "0%", marginTop: "0%", marginRight: "0"}}>*/}
+    //         {/*    <img className="" style={{*/}
+    //         {/*        position: "relative",*/}
+    //         {/*        borderRadius: "10px",*/}
+    //         {/*        height: '10%',*/}
+    //         {/*        width: "15%",*/}
+    //         {/*        marginTop: "5%",*/}
+    //         {/*        marginBottom: "1%",*/}
+    //         {/*        marginLeft: "5%"*/}
+    //         {/*    }}*/}
+    //         {/*         src={'http://localhost:3000/cropped/' + 'test' + index + '.jpg'}/>*/}
+    //         {/*    <div style={{position: "relative", marginLeft: "10%", marginBottom: "5%"}}>*/}
+    //         {/*        <a target='Оригинал' style={{color: "green", fontWeight: "600"}}*/}
+    //         {/*           href={'http://localhost:5000/cropped/' + 'test' + index + '.jpg'}>Оригинал</a>*/}
+    //         {/*    </div>*/}
+    //         {/*</div>*/}
+    //         <div style={{float: "left", marginLeft: "0%", marginTop: "2%", marginRight: "0"}}>
+    //             <div style={{float: "left", marginRight: "-15%"}}><img className="" style={{
+    //                 position: "relative",
+    //                 borderRadius: "10px",
+    //                 height: '25%',
+    //                 width: "35%",
+    //                 marginTop: "5%",
+    //                 marginBottom: "1%",
+    //                 marginLeft: "10%",
+    //                 marginRight: "0%"
+    //             }}
+    //                                                                    src={'http://localhost:3000/cropped/' + 'test' + index + '.jpg'}/>
+    //                 <div style={{position: "relative", marginLeft: "20%", marginBottom: "5%"}}>
+    //                     <a target='Оригинал' style={{color: "green", fontWeight: "600"}}
+    //                        href={'http://localhost:5000/cropped/' + 'test' + index + '.jpg'}>Оригинал</a>
+    //                 </div>
+    //             </div>
+    //             <div style={{
+    //                 float: "left",
+    //                 width: "500px",
+    //                 height: "100px",
+    //                 marginTop: "2%"
+    //             }}>DOG, {'color: ' + value.color}, {'tail: ' + value.tail}, без хозяина
+    //             </div>
+    //             <div style={{float: "left", width: "100px", height: "100px", marginTop: "2%"}}>content++</div>
+    //         </div>
+    //         {/*</div>*/}
+    //
+    //
+    //     </div>)
+    // }
 
 
 function renderDetected(value, index) {
@@ -16,6 +92,7 @@ function renderDetected(value, index) {
     let margin_l = (window.screen.width - 1049) / 2
     // alert(value['src_file'])
     // console.log((window.screen.width))
+
     return (<div className="e578_574" key={index} style={{marginTop: y_pos, marginLeft: "10%"}}>
         <div className="e575_421"></div>
         <span
@@ -44,6 +121,47 @@ function renderDetected(value, index) {
     </div>)
 }
 
+
+function Card_(value, index) {
+    return (<div className="py-10">
+                <div className=" max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+                    <div className="md:flex">
+                        <div className="md:flex-shrink-0 my-auto md:ml-2 ">
+                            <img className="h-48 w-full object-cover md:h-3/5 md:w-48 my-auto rounded"
+                                 src={window.location.href+'cropped/' + 'test' + index + '.jpg'}
+                                 alt="Man looking at item at a store"/>
+                        </div>
+                        <div className="p-8">
+                            <div className=" tracking-wide text-sm text-green-500 font-semibold">open_moscow_cam_531
+                            </div>
+                            <p className="block mt-2 text-lg leading-tight font-medium text-black">
+                                Cобака, {'цвет: ' + value.color}, {'хвост: ' + value.tail}, без хозяина</p>
+                            <div className="flex">
+                                <p className="mt-2 text-gray-500">
+                                    Топ-3 породы:
+                                </p>
+                                <p className="ml-1 mt-2 mx-auto px-2 rounded-3 "
+                                   >{value['top3Breed'][0]}</p>
+                                <p className="mt-2 mx-auto px-2 rounded-3 "
+                                   >{value['top3Breed'][1]}</p>
+                                <p className="mt-2 mx-auto px-2 rounded-3 "
+                                   >{value['top3Breed'][2]}</p>
+                            </div>
+                            <div className="flex">
+                                <p className="mt-3 tracking-wide text-sm font-semibold">Адрес камеры:</p>
+                                <p className="ml-4 mt-3 tracking-wide text-sm">Москва, ул.Первомайская д30к7</p>
+                            </div>
+                            <div className="flex">
+                                <p className="mt-3 tracking-wide text-sm font-semibold">Время съёмки:</p>
+                                <p className="ml-4 mt-3 tracking-wide text-sm">10.10.2021 в 13:15</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>)
+}
+
+
 export default class UploadFiles extends Component {
     constructor(props) {
         super(props);
@@ -56,32 +174,20 @@ export default class UploadFiles extends Component {
             message: "",
 
             fileInfos: [
+
                 // {
-                //     "Unnamed: 0": 0,
-                //     "cam_adress": "улица Пушкина, д. Колотушкина",
-                //     "color": "Silver",
-                //     "croppedFileName": "/Users/kirillbogomolov/Desktop/Coding/react-2/build/cropped/test0.jpg",
-                //     "isSomeoneHere": 1,
-                //     "src_file": "168.png",
-                //     "tail": "long",
-                //     "time_photographed": "23.10.            2021 в 9:43",
-                //     "top3Breed": [
-                //         "dingo",
-                //         "Siberian_husky",
-                //         "kelpie"]
+                //     fileName: "open_moscow_cam_531",
+                //     animal: "собака",
+                //     color: "цвет чёрный",
+                //     tail: 'длинный хвост',
+                //     withOwner: "false",
+                //     Top3breed: ['Чихуахуа', "Бульдог", "Овчарка"],
+                //     camAdress: "Москва, ул.Первомайская д30к7",
+                //     datetime: "10.10.2021 в 13:15",
+                //     croppedFilename: "img1.png"
                 // }
-        //     {
-        //         fileName: "open_moscow_cam_531",
-        //         animal: "собака",
-        //         color: "цвет чёрный",
-        //         tail: 'длинный хвост',
-        //         withOwner: "false",
-        //         Top3breed: ['Чихуахуа', "Бульдог", "Овчарка"],
-        //         camAdress: "Москва, ул.Первомайская д30к7",
-        //         datetime: "10.10.2021 в 13:15",
-        //         croppedFilename: "img1.png"}
-    ],
-    }
+            ],
+        }
         ;
         this.onDrop = this.onDrop.bind(this);
         this.upload = this.upload.bind(this);
@@ -89,6 +195,7 @@ export default class UploadFiles extends Component {
 
 
     }
+
 
     onDrop(files) {
         // console.log(files);
@@ -106,12 +213,15 @@ export default class UploadFiles extends Component {
             currentFile: currentFile,
         });
 
+        // SetupLoading();
+
         UploadService.upload(this.state.selectedFiles, (event) => {
             event.preventDefault();
 
             this.setState({
                 progress: Math.round((100 * event.loaded) / event.total),
             });
+
         })
             .then((response) => {
                 // console.log(response)
@@ -170,10 +280,23 @@ export default class UploadFiles extends Component {
         //     </div>
         //     </div>
         // )
-
+        // return (<div>
+        //     <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
+        //         <div className="flex-shrink-0 з">
+        //
+        //         </div>
+        //         <div>
+        //             <div className="text-xl font-medium text-black">ChitChat</div>
+        //             <p className="text-gray-500">You have a new message!</p>
+        //         </div>
+        //     </div>
+        //     <div className="container p-4">
+        //     {/*<MyButton/>*/}
+        //         </div>
+        // </div>)
 
         return (
-            <div style={{marginBottom: '500px'}}>
+            <div style={{marginBottom: ''}}>
                 {currentFile && progress !== 100 && (
                     <div className="progress mb-3">
                         <div
@@ -188,7 +311,7 @@ export default class UploadFiles extends Component {
                         </div>
                     </div>
                 )}
-                <div style={{width: "80%", marginLeft: "10%"}} align="">
+                <div className="mx-auto" style={{maxWidth: "800px", marginLeft: "10%"}} align="">
                     <Dropzone style={{alignSelf: "center"}} onDrop={this.onDrop} multiple={true}>
                         {({getRootProps, getInputProps}) => (
                             <section>
@@ -196,7 +319,7 @@ export default class UploadFiles extends Component {
                                     <input {...getInputProps()} />
                                     {selectedFiles && selectedFiles[0].name ? (
                                         <div className="selected-file">
-                                            {selectedFiles && selectedFiles[0].name}
+                                            Загружено: {selectedFiles.length} файлов
                                         </div>
                                     ) : (
                                         "Перетащите сюда файлы, либо нажмите для выбора файлов"
@@ -204,7 +327,7 @@ export default class UploadFiles extends Component {
                                 </div>
                                 <aside className="selected-file-wrapper">
                                     <button
-                                        className="btn btn-success"
+                                        className="btn btn-success" style={{backgroundColor:"#28A745", border:'0'}}
                                         disabled={!selectedFiles}
                                         onClick={this.upload}
                                     >
@@ -311,10 +434,10 @@ export default class UploadFiles extends Component {
                 {console.log(fileInfos)}
                 {Array.isArray(fileInfos) && fileInfos.map((value, index) => {
                     // console.log(index, value);
-                    return renderDetected(value, index);
+                    return Card_(value, index);
                 })}
 
-                {}
+                {/*{Card(fileInfos[0], 0)}*/}
 
 
                 {/*<Card/>*/}
